@@ -2,16 +2,18 @@
 
 ## Basic Controls
 
-These settings are the safest starting point for finetuning the responses you get from your favorite LLM!
+These settings are the safest starting point for finetuning the responses you get from your favorite LLM. The ranges I mentioned here are rough estimates, and the best values depend on the particular LLM and what you're trying to do.
 
 ### Temperature
 
+   **Range:** 0.0–2.0
 - Think of it like a knob that controls how wild your output can get
 - **Low (e.g., 0.1-1.0):** Normal, sensible stories
 - **High (e.g., 1.0-2.0):** Wild, creative stories
 
 ### Min Tokens
 
+   **Range:** 0–250
 How short do you want your output to be?
 - Shorter responses might be cut short in the middle, which could interrupt your chat
 - Suggested values:
@@ -20,15 +22,18 @@ How short do you want your output to be?
 
 ### Max Tokens
 
+   **Range**: 1–16,384 (depends on context size)
 How long do you want your output to be?
 - Longer responses take more time to generate
 - Suggested values:
 	- *CharacterAI style:* Start at `100` and adjust up or down according to your preference!
-	- *Novel style:* Start at `1001` and adjust up or down to your preference!
+	- *Novel style:* Start at `1000` and adjust up or down to your preference!
 
 ## Repetition Controls
 
 ### Repetition Penalty
+
+   **Range**: 1.0–2.0
 Determines how strictly an LLM avoids repeating words or phrases, helping maintain variety and natural flow in responses.  
 - **Low (e.g., 1.1–1.2):** Allows some repetition
   - Useful when repetition fits the context, such as a character's catchphrase or verbal tic
@@ -40,6 +45,7 @@ Determines how strictly an LLM avoids repeating words or phrases, helping mainta
 
 ### Rep Pen Range (Repetition Penalty Range)
 
+   **Range**: 0–4,096 (context window size)
 Defines how far back the model considers for repetition.  
 - **Small range:** Focuses on avoiding immediate repetition (e.g., within a few words or sentences)
 - **Larger range:** Checks further back, reducing the chance of reusing words, phrases, or ideas from earlier parts of the conversation
@@ -48,18 +54,21 @@ Defines how far back the model considers for repetition.
 
 ### Repetition Penalty Slope
 
+   **Range**: 0.5–2.0
 Adjusts how strongly repetition penalties are applied over time, following an S-shaped curve.
 - **Flat curve (slope = 0):** No penalties; all words are treated equally
 - **Steep curve (slope > 1):** Strongly discourages repetition, especially for recent words
-  - Early words get little to no penalty, but recent repeats face higher penalties
-- **Gentle curve (slope close to 0):** Balances variety while allowing some repetition when it makes sense
+	- Early words get little to no penalty, but recent repeats face higher penalties
+	- **Gentle curve (slope close to 0):** Balances variety while allowing some repetition when it makes sense
 
-*Note:*
-- **Too low:** Results in excessive repetition, making the text sound dull
-- **Too high:** Avoids repetition too aggressively, leading to unnatural or overly complex responses
+> ℹ Note:
+> - **Too low:** Results in excessive repetition, making the text sound dull
+> - **Too high:** Avoids repetition too aggressively, leading to unnatural or overly complex responses
+
 
 ### Frequency Penalty
 
+   **Range**: 0.0–2.0
 Monitors how often specific words appear and discourage overuse by encouraging variety.  
 > Example: If "cat" appears too frequently, the LLM might switch to related terms like "kitten," "feline," or "pet"
 
@@ -67,18 +76,20 @@ Monitors how often specific words appear and discourage overuse by encouraging v
 
 ### Top K
 
+   **Range**: 0–10,000
 Tells the LLM to only pick words it likes the most and ignores the rest.
-- **Low (e.g., 3):** means the LLM will pick only its very favorite words
+- **Low (e.g., 3):** LLM will pick only its very favorite words
 	- More focused but might feel less random.
-- **High (e.g., 50):** means LLM will pick lots of different words to play with
+- **High (e.g., 50):** LLM will pick lots of different words to play with
 	- More creative and random but might make the story too unpredictable and nonsensical
-- **Zero:** all the words!
+- **Zero:** All the words!
 	- Might pick really strange words that don’t make much sense, because nothing is stopping it from considering even the least likely options.
 > Example: instead of saying, "The cat sat on the mat," it might say, "The moonfish danced with a pineapple," because it didn’t narrow down the good choices.
 
 ### Top P
 
-Tells the LLM to *only pick the most popular words (small Top P)* or *feel free to try some less popular words too" (large Top P).*
+   **Range**: 0.0–1.0
+Tells the LLM to *only pick the most popular words (small Top P)* or *feel free to try some less popular words too (large Top P).*
 - **Low (closer to 0):**
 	- Only picks from the most popular words (the ones most people love)
 	- Plays it safe and chooses words that make the most sense.
@@ -94,6 +105,7 @@ Tells the LLM to *only pick the most popular words (small Top P)* or *feel free 
 
 ### Min P
 
+   **Range**: 0.0–0.1
 Decides how "safe" the LLM wants to play.
 - **Low:** Add unusual or unexpected words to make things more unique.
 	- Might get creative or quirky, but sometimes picks something confusing.
@@ -104,6 +116,7 @@ Decides how "safe" the LLM wants to play.
 
 ### Top A
 
+   **Range**: 0.0–1.0
 Decides how picky the LLM wants to be with the words it uses.
 - **High (e.g., 100 or more):** Picky and reliable
 	- Sticks to its top favorite words (the ones with the best scores)
@@ -116,13 +129,15 @@ Decides how picky the LLM wants to be with the words it uses.
 
 ### Mirostat
 
-Mirostat is at its best when you use it on its own.
-If you try mixing it with other methods like Top P or Tail-Free Sampling, you might get word salad or endless looping.
+> ⚠ **Mirostat is at its best when you use it on its own.**
+> If you try mixing it with other methods like **Top P** or **Tail-Free Sampling**, you might get word salad or endless looping.
 
-Mirostat helps the LLM decide how surprising its words should be. Mode 1 is simpler and quicker, while Mode 2 is more creative but slower. Eta is like a speed dial for how fast the LLM changes its tone or ideas!
+Mirostat helps the LLM decide how surprising its words should be. Mode 1 is **simpler** and **quicker**, while Mode 2 is more **creative** but **slower**.
 
 #### Mode
 
+   **Range**: 0–2
+- **Mode 0:** Disabled/Off
 - **Mode 1** (Original Mirostat):
 	- Guesses how surprising words should be based on a rule about word popularity (like Zipf's law: common words are used more than rare ones)
 	- Sticks to a familiar way of thinking
@@ -134,16 +149,18 @@ Mirostat helps the LLM decide how surprising its words should be. Mode 1 is simp
 
 #### Eta
 
-Controls how fast your LLM reacts to changes while talking, like a speed dial for how fast the LLM changes its tone or ideas.
+   **Range**: 0.1–1.0
+Controls how fast the LLM reacts to changes while talking, like a speed dial for how fast the LLM changes its tone or ideas.
 - **Low (e.g., 0.2–0.4):**
 	- Takes its time to adjust and keeps the story steady and smooth
 > Example: Tells a calm story that stays on track, like "The cat purred softly as it rested by the fire."
 - **High (e.g., 0.8–1.0):**
 	- Reacts quickly and makes more exciting or unexpected changes in the story
-> Example: Might add surprises like, "The cat purred loudly, then leapt onto the wizard's spellbook!"
+> Example: Might add surprises like, "The cat purred loudly, then leaped onto the wizard's spellbook!"
 
 #### Tau
 
+   **Range**: 2.0–8.0
 Tells the LLM how much randomness or surprise you want in the output.
 - **Low (e.g., 2.0–4.0):**
 	- Plays it safe and tells a simple, predictable story.
@@ -156,6 +173,7 @@ Tells the LLM how much randomness or surprise you want in the output.
 
 ### Typical
 
+   **Range**: 0.0–1.0
 Keeps word choices consistent by steering clear of super rare or odd terms by balancing between being too predictable and too random (kind of like finding the sweet spot for making the story both interesting and understandable!)
 - Checks how surprising or expected each word is compared to the others
 - Doesn’t just pick the most popular or random words (tries to choose ones that feel right for the story)
@@ -168,6 +186,7 @@ Keeps word choices consistent by steering clear of super rare or odd terms by ba
 
 ### TFS (Tail-Free Sampling)
 
+   **Range**: 0.0–1.0
 Helps decide how far down the list of word options it should go before cutting off the less useful ones. It keeps things fresh without going too far into nonsense!
 - **Low (e.g., 0.1):** Keeps things simple and clear
 	- Very strict and keeps only the most popular, logical toys (words).
@@ -180,10 +199,10 @@ Helps decide how far down the list of word options it should go before cutting o
 
 Decides the sequence the LLM follows to pick and arrange words in a story.  
 Imagine you're baking a cake, and you have several steps to follow—like mixing, adding sugar, and decorating. The **order** of these steps affects how the cake turns out:  
-- If you mix first, then adds sugar, and decorate last, the cake will probably turn out great.
+- If you mix first, then add sugar, and decorate last, the cake will probably turn out great.
 - But if you decorate first, then mix, and add sugar last, the cake might be a disaster (i.e., word salad).
 
-Similarly, in storytelling, changing the order of samplers can subtly shift the style and content of the response. Every language model is unique, so there’s no “perfect preset,” just like there’s no one-size-fits-all recipe for "cakes" when the cake in question could etiher be birthday cake, cheesecake or crabcake. Experimenting will help you find what works best for you!
+Similarly, in storytelling, changing the order of samplers can subtly shift the style and content of the response. Every language model is unique, so there’s no “perfect preset,” just like there’s no one-size-fits-all recipe for "cakes" when the cake in question could either be birthday cake, cheesecake or crabcake. Experimenting will help you find what works best for you!
 - **Values and Corresponding Sampler:**
 	- 0 = Top K
 	- 1 = Top A
@@ -212,6 +231,7 @@ By trying out multiple paths at once, Beam Search helps your LLM create response
 
 ### Epsilon Cutoff
 
+   **Range**: 0.0–0.1
 This sets a threshold for the probability of words. Words that are too unlikely (below the cutoff) are skipped.
 - **Epsilon = 0.001 (strict)**  
   - Only keeps words that are very likely to fit.  
@@ -226,6 +246,7 @@ This sets a threshold for the probability of words. Words that are too unlikely 
 
 ### Eta Cutoff
 
+   **Range**: 0.0–1.0
 Considers how surprising or unexpected words are based on the overall word distribution. Words that stand out too much are skipped.
 - **Eta = 0.1 (strict)**  
   - Keeps only very expected and safe words.
@@ -246,6 +267,7 @@ Considers how surprising or unexpected words are based on the overall word distr
 
 ### Dynatemp Exponent
 
+   **Range**: 0.0–3.0+
 Creativity speed dial to decide how fast your LLM gets imaginative as it tells its story!
 1. **Low (e.g., 0.1–0.5)**
 	- Slow and steady creativity
@@ -254,17 +276,17 @@ Creativity speed dial to decide how fast your LLM gets imaginative as it tells i
 		- *Start:* "The cat sat on the mat."
 		- *Later:* "It purred softly, enjoying the warmth of the afternoon sun."
 2. **Moderate (e.g., 1.0–1.5)**  
-   - Balanced creativity
-   - Adds flair without being too wild
+ - Balanced creativity
+ - Adds flair without being too wild
 	- **Example:**
 		- *Start:* "The cat sat on the mat."  
 		- *Later:* "It stretched out, then leaped toward a dancing beam of light."
 3. **High (e.g., 2.0–3.0 or higher)**  
-   - Creativity increases quickly
-   - More imaginative but may risk being too random
-   - **Example:**
-     - *Start:* "The cat sat on the mat."
-     - *Later:* "The cat yawned, then sprang onto the wizard’s glowing staff to bat away sparkling stars."
+ - Creativity increases quickly
+ - More imaginative but may risk being too random
+ - **Example:**
+  - *Start:* "The cat sat on the mat."
+  - *Later:* "The cat yawned, then sprang onto the wizard’s glowing staff to bat away sparkling stars."
 
 ### Dynatemp Min & Max
 
@@ -303,41 +325,51 @@ A switch that tells the LLM whether to keep things short and sweet or let the st
  	 *"The cat, feeling warm and happy, sat on the mat by the fire and purred softly as the sun sets."*  
  	 (More details and a longer response!)
 
-## Additional Controls
+## ## Additional Controls
 
 ### DRY (Don't Repeat Yourself)
 
-Gentler reminder for LLM to avoid repeating things too much. It allows some common words but keeps the conversation moving forward/not stuck in a loop.
-- Gently reminds the LLM when it's repeating itself
-- Letting the LLM know it's okay to say some things again (like "hello" or "the")
-- Helps the LLM think of new things to say
-- Makes sure LLM's stories don't get stuck in a loop
+DRY looks at the words the AI has already used and adjusts how likely it is to use them again.
 
+- When the LLM uses a word, DRY remembers it
+- If a word was used recently or frequently, the LLM is less likely to pick it again
+- Common words are affected less than unique or specific words (like 'the' or 'and')
+- This helps keep responses fresh and varied without sounding unnatural
 ### Temperature Last (Final Seasoning)
 
 - Like adding spices to your food at the very end
 - Makes sure everything still tastes good
 - Adds just the right amount of creativity
-
 ### Word Ban (No-No Words)
 
 - Like having a list of words you're not supposed to use (i.e: slop)
 - Helps keep conversations nice
 - Makes sure stories stay on topic
+### Using Top K and Top P Together
 
+Both can work together or separately to help the LLM make better word choices, but when used together:
+
+- The order they're applied in matters (check your Sampler Order)
+- Either one can filter first
+- Both help reduce the pool of words the LLM picks from, just in different ways
+- **Top K**
+    
+    - Keeps only a specific number of choices
+    - **Think:** "Only look at the top 40 possible next words"
+- **Top P**
+    
+    - Keeps choices based on their combined probabilities
+    - **Think:** "Keep the most likely words until their probabilities add up to 90%"
 ## Remember
 
 - These settings work together like ingredients in a recipe
 - What works for one LLM might not work for another
-- There's no perfect way to set things up. It's all about what kind of stories you want to hear from LLM!
+- There's no perfect way to set things up. It's all about what kind of stories you want to hear from LLM
 - If something doesn't make sense, try changing one setting at a time
 - Keep track of what changes you make
 - Experiment and have fun!
-- Remember that LLM is learning too!
-
 ## Helpful Tips
 
 - Start with the normal settings
 - Different types of stories might need different settings
 - Write down what works best
-- Try different things to see what you like!
